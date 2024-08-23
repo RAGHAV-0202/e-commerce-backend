@@ -1,0 +1,74 @@
+1. Authentication Routes
+    POST /api/auth/register: Register a new user.               //
+    POST /api/auth/login: Login a user.                         //
+    POST /api/auth/logout: Logout a user.                       //
+    POST /api/auth/refresh-token: Refresh JWT tokens.           //
+    POST /api/auth/forgot-password: Send a password reset link. //
+    POST /api/auth/reset-password: Reset a user's password.     //
+
+2. User Management Routes
+    GET /api/users/profile: Get the logged-in user's profile.   //
+    PUT /api/users/profile: Update the logged-in user's profile.//
+    GET /api/users: Get all users (Admin).                      //
+    GET /api/users/:id: Get a user by ID (Admin).               //
+    DELETE /api/users/:id: Delete a user by ID (Admin).         //
+
+3. Product Routes
+    GET /api/products: Get all products.                        //
+    GET /api/products/:id: Get a single product by ID.          //
+    POST /api/products: Add a new product (Admin).              //
+    PUT /api/products/:id: Update a product by ID (Admin).      //
+    DELETE /api/products/:id: Delete a product by ID (Admin).   //
+    GET /api/products/categories: Get all product categories.   //
+    GET /api/products/search: Search products by name or category.   //
+
+4. Cart Routes
+    GET /api/cart: Get the user's cart.                         
+    POST /api/cart: Add items to the user's cart.
+    PUT /api/cart/:itemId: Update the quantity of an item in the cart.
+    DELETE /api/cart/:itemId: Remove an item from the cart.
+    DELETE /api/cart: Clear the user's cart.
+
+5. Order Routes
+    GET /api/orders: Get all orders (Admin) or user-specific orders (User).
+    GET /api/orders/:id: Get order details by ID.
+    POST /api/orders: Place a new order.
+    PUT /api/orders/:id: Update order status (Admin).
+    DELETE /api/orders/:id: Cancel an order.
+
+6. Payment Routes
+    POST /api/payment: Process a payment.
+    GET /api/payment/status: Get payment status for an order.
+
+7. Review Routes
+    GET /api/reviews/:productId: Get all reviews for a product.
+    POST /api/reviews/:productId: Add a review for a product.
+    PUT /api/reviews/:productId/:reviewId: Update a review.
+    DELETE /api/reviews/:productId/:reviewId: Delete a review.
+
+8. Wishlist Routes
+    GET /api/wishlist: Get the user's wishlist.
+    POST /api/wishlist: Add items to the user's wishlist.
+    DELETE /api/wishlist/:itemId: Remove an item from the wishlist.
+
+9. Address Routes
+    GET /api/address: Get the user's saved addresses.           
+    PUT /api/address/:id: Update an address.                    
+
+10. Admin Routes
+    GET /api/admin/dashboard: Get statistics for the admin dashboard.
+    GET /api/admin/orders: Get all orders (Admin).
+    GET /api/admin/products: Get all products (Admin).
+    GET /api/admin/users: Get all users (Admin).
+
+11. Coupon/Discount Routes
+    GET /api/coupons: Get all available coupons.
+    POST /api/coupons: Create a new coupon (Admin).
+    PUT /api/coupons/:id: Update a coupon (Admin).
+    DELETE /api/coupons/:id: Delete a coupon (Admin).
+
+12. Shipping Routes
+    GET /api/shipping: Get available shipping options.
+    POST /api/shipping: Create a shipping option (Admin).
+    PUT /api/shipping/:id: Update a shipping option (Admin).
+    DELETE /api/shipping/:id: Delete a shipping option (Admin).
