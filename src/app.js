@@ -1,4 +1,4 @@
-import express from "express"
+import express, { Router } from "express"
 import mongoose from "mongoose";
 import cors from "cors"
 import dotenv from "dotenv"
@@ -10,6 +10,7 @@ import userRouter from "./routes/userMgmt.routes.js"
 import asyncHandler from "./utils/asyncHandler.js";
 import adminRouter from "./routes/admin.routes.js"
 import ApiResponse from "./utils/apiResponse.js";
+import serverless from "serverless-http"
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(cookieParser())
 
 
 const corsOptions = {
-    origin: ['https://flash-cards-mbum.vercel.app', 'http://localhost:3000' , "http://172.20.10.2:3000" , "http://192.168.29.76:3000"],
+    origin: ['https://h-m-clone.netlify.app/', 'http://localhost:3000' , "http://172.20.10.2:3000" , "http://192.168.29.76:3000"],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
     credentials: true ,
@@ -71,5 +72,8 @@ app.get("*" , (req,res)=>{
         </body>
     `)
 })
+
+app.use("/.netlify/src/app" , Router)
+export const handler = serverless(app);
 
 export {app}
