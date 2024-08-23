@@ -10,7 +10,6 @@ import userRouter from "./routes/userMgmt.routes.js"
 import asyncHandler from "./utils/asyncHandler.js";
 import adminRouter from "./routes/admin.routes.js"
 import ApiResponse from "./utils/apiResponse.js";
-import serverless from "serverless-http"
 
 const app = express();
 
@@ -73,7 +72,5 @@ app.get("*" , (req,res)=>{
     `)
 })
 
-app.use("/.netlify/src/app" , Router)
-export const handler = serverless(app);
 
 export {app}
