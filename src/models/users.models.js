@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import Products from "./Products.models.js";
 
 const UserSchema = new mongoose.Schema({
 
@@ -46,13 +47,26 @@ const UserSchema = new mongoose.Schema({
     cart: [
         {
         productId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+            type: String,
+            // ref: 'Product',
+            requried : [true , "product id is required"]
         },
         quantity: {
             type: Number,
             default: 1,
         },
+          cartValue : {
+          type : Number
+        },
+        title : {
+            type : String
+        },
+        image :{
+            type : String
+        } , 
+        price :{
+            type : Number
+        }
         },
     ],
     wishlist: [
@@ -69,8 +83,8 @@ const UserSchema = new mongoose.Schema({
       },
       status: { 
         type: String, 
-        enum: ['Processing', 'Shipped', 'Delivered', 'Cancelled'], 
-      },
+        enum:  ["Placed" , "Processing" , "Confirmed" , "Shipped" , "Out for Delivery" , "Delivered" , "Cancelled" , "Refunded" , "Returned" , "Completed"],
+      }
     },
   ],
   paymentMethods: [
@@ -94,7 +108,11 @@ const UserSchema = new mongoose.Schema({
   dob : {
     type : String ,
     default : "01/01/2001"
-  }
+  },
+  totalCartValue: {
+        type: Number,
+        default: 0
+  },
 } , {timestamps : true})
 
 
@@ -124,7 +142,49 @@ UserSchema.methods.generateRefreshToken = function (){
         { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
     )
 }
+UserSchema.methods.calculateCartValue = async function () {
+    const cartItems = this.cart;
+    let totalValue = 0;
 
+    for (const item of cartItems) {
+        const product = await Products.findById(item.productId).exec();
+        if (product) {
+            totalValue += product.numericPrice * item.quantity;
+        }
+    }
+
+    return totalValue;
+};
+
+UserSchema.pre("save", async function (next) {
+    if (this.isModified("cart")) {
+        let totalCartValue = 0;
+
+        // Calculate the total cart value and update each item's cartValue
+        const cartUpdates = this.cart.map(async item => {
+            const product = await Products.findById(item.productId).exec();
+            if (product) {
+                const itemCartValue = product.numericPrice * item.quantity;
+                totalCartValue += itemCartValue;
+
+                return {
+                    ...item.toObject(),
+                    cartValue: itemCartValue
+                };
+            }
+            return item;
+        });
+
+        this.cart = await Promise.all(cartUpdates);
+        this.totalCartValue = totalCartValue;
+    }
+
+    if (this.isModified("password")) {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
+
+    next();
+});
 
 const User = mongoose.model("User" , UserSchema)
 export default User

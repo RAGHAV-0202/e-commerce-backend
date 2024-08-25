@@ -1,40 +1,58 @@
+0. Admin Routes
+    POST /api/admin/login: Login (Admin).                       //
+    GET /api/admin/get-all-users: Get all users (Admin).        //
+    GET /api/admin/get-user/:id: Get user by ID (Admin).        //
+    POST /api/admin/delete-user/:id: Delete user by ID (Admin). //
+    POST /api/admin/add-product: Add a new product (Admin).     //
+    POST /api/admin/edit-product/:id: Edit product by ID        //
+    POST /api/admin/delete-product/:id: Delete product          //
+    GET /api/admin/get-orders: Get all orders (Admin).          //
+    POST /api/admin/edit-status/:id: Update order status        //
+
 1. Authentication Routes
     POST /api/auth/register: Register a new user.               //
     POST /api/auth/login: Login a user.                         //
     POST /api/auth/logout: Logout a user.                       //
-    POST /api/auth/refresh-token: Refresh JWT tokens.           //
-    POST /api/auth/forgot-password: Send a password reset link. //
-    POST /api/auth/reset-password: Reset a user's password.     //
+    POST /api/auth/refreshAT: Refresh JWT tokens.               //
+    POST /api/auth/reset-password-request: Send a password reset link. //
+    POST /api/auth/reset-password/:token: Reset a user's password.     //
 
 2. User Management Routes
-    GET /api/users/profile: Get the logged-in user's profile.   //
-    PUT /api/users/profile: Update the logged-in user's profile.//
-    GET /api/users: Get all users (Admin).                      //
-    GET /api/users/:id: Get a user by ID (Admin).               //
-    DELETE /api/users/:id: Delete a user by ID (Admin).         //
+    GET /api/user/profile: Get the logged-in user's profile.    //
+    POST /api/user/profile/update-firstname": update profile    //
+    POST /api/user/profile/update-lastname: Update profile.     //
+    POST /api/user/profile/update-phonenumber: Update profile.  //
+    POST /api/user/profile/update-email: Update profile.        //
+    POST /api/user/profile/update-address: Update profile.      //
+    POST /api/user/profile/update-dob: Update profile.          //
+    POST /api/user/profile/update-payment-methods: Update       //
+    POST /api/user/profile/update-profile-picture: Update       //
+    GET /api/user: Get all users (Admin).                       //
+    GET /api/user/:id: Get a user by ID (Admin).                //
+    DELETE /api/user/:id: Delete a user by ID (Admin).          //
 
 3. Product Routes
-    GET /api/products: Get all products.                        //
-    GET /api/products/:id: Get a single product by ID.          //
-    POST /api/products: Add a new product (Admin).              //
-    PUT /api/products/:id: Update a product by ID (Admin).      //
-    DELETE /api/products/:id: Delete a product by ID (Admin).   //
+    GET /api/all-products: Get all products.                    //
+    GET /api/item/:id: Get a single product by ID.              //
+    POST /api/admin/add-product: Add a new product (Admin).     //
+    POST /api/admin/edit-product/:id: Edit product by ID        //
+    POST /api/admin/delete-product/:id: Delete product          //
     GET /api/products/categories: Get all product categories.   //
-    GET /api/products/search: Search products by name or category.   //
+    GET /api/products/search/:query: Search products by name    //
 
 4. Cart Routes
-    GET /api/cart: Get the user's cart.                         
-    POST /api/cart: Add items to the user's cart.
-    PUT /api/cart/:itemId: Update the quantity of an item in the cart.
-    DELETE /api/cart/:itemId: Remove an item from the cart.
-    DELETE /api/cart: Clear the user's cart.
+    GET /api/cart/get-cart: Get the user's cart.                //
+    POST /api/cart: Add items to the user's cart.               //
+    PUT /api/cart/:itemId: Update the quantity of an item in the cart.  //
+    DELETE /api/cart/:itemId: Remove an item from the cart.     //
+    DELETE /api/cart: Clear the user's cart.                    //
 
 5. Order Routes
-    GET /api/orders: Get all orders (Admin) or user-specific orders (User).
-    GET /api/orders/:id: Get order details by ID.
-    POST /api/orders: Place a new order.
-    PUT /api/orders/:id: Update order status (Admin).
-    DELETE /api/orders/:id: Cancel an order.
+    GET /api/orders: Get all orders (Admin) or user-specific orders (User).  //
+    GET /api/orders/:id: Get order details by ID.               //
+    POST /api/orders: Place a new order.                        //
+    PUT /api/orders/:id: Update order status (Admin).           //
+    DELETE /api/orders/:id: Cancel an order.                    //
 
 6. Payment Routes
     POST /api/payment: Process a payment.

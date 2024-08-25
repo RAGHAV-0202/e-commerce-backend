@@ -4,7 +4,8 @@ import { Products } from "../src/models/Products.models.js";
 // Import your product data
 // import data from "../src/data/data.js"
 
-
+import dotenv from "dotenv"
+dotenv.config()
 
 
 
@@ -17,7 +18,7 @@ import { Products } from "../src/models/Products.models.js";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://raghavkapoor16947:raghavHM@h-m.jkpod.mongodb.net/H-M', {
+    await mongoose.connect(`${process.env.MONGO_URI}/${process.env.DB_NAME}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

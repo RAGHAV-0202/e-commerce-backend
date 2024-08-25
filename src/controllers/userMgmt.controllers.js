@@ -15,8 +15,8 @@ const UserProfile = asyncHandler(async(req,res)=>{
  return res.status(401).json(new apiError(401, null, "User not authenticated"));
     }
 
-    const {firstName, lastName, phoneNumber, email, address, profilePicture, dob, cart, paymentMethods} = user
-    res.status(200).json(new ApiResponse(200 , {firstName, lastName, phoneNumber, email, address, profilePicture, dob, cart, paymentMethods} , "user profile fetched"))
+    const {firstName, lastName, phoneNumber, email, address, profilePicture, dob, cart, paymentMethods , orders} = user
+    res.status(200).json(new ApiResponse(200 , {firstName, lastName, phoneNumber, email, address, profilePicture, dob, cart, paymentMethods,orders} , "user profile fetched"))
 })
 
 const UserUpdateFirstName = asyncHandler(async(req,res)=>{

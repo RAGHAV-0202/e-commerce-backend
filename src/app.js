@@ -10,7 +10,9 @@ import userRouter from "./routes/userMgmt.routes.js"
 import asyncHandler from "./utils/asyncHandler.js";
 import adminRouter from "./routes/admin.routes.js"
 import ApiResponse from "./utils/apiResponse.js";
-
+import cartRouter from "./routes/cart.routes.js"
+import orderRouter from "./routes/orders.routes.js"
+import reviewRouter from "./routes/reviews.routes.js"
 const app = express();
 
 
@@ -61,7 +63,9 @@ app.use("/api/products/data" , dataRouter )
 app.use("/api/auth" , authRouter )
 app.use("/api/user" , userRouter)
 app.use("/api/admin" , adminRouter)
-
+app.use("/api/cart" , cartRouter)
+app.use("/api/orders" , orderRouter)
+app.use("/api/reviews" , reviewRouter)
 
 
 app.get("*" , (req,res)=>{

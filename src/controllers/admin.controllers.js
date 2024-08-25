@@ -6,6 +6,7 @@ dotenv.config()
 import User from "../models/users.models.js";
 import ApiResponse from "../utils/apiResponse.js";
 import Products from "../models/Products.models.js";
+import Order from "../models/orders.model.js";
 
 async function generateAccessToken(userId){
     try{
@@ -150,4 +151,42 @@ const AdminDeleteProduct = asyncHandler(async(req,res)=>{
     res.status(200).json(new ApiResponse(200 , deletedProduct , "Product deleted Successfully"))
 })
 
-export {AdminGetAllUsers , adminLogin ,AdminGetUser , AdminDeleteUser , AdminAddProduct ,AdminEditProduct , AdminDeleteProduct}
+const AdminGetOrders = asyncHandler(async(req,res)=>{
+    const Orders = await Order.find()
+    res.status(200).json(new ApiResponse(200 , Orders , "All Orders Fetched"))
+})
+
+const AdminUpdateStatus = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { newStatus } = req.body;
+
+    const order = await Order.findById(id).select("status user");
+    if (!order) {
+        return res.status(404).json(new ApiResponse(404, null, "Order not found"));
+    }
+
+    order.status = newStatus;
+
+    let user = await User.findById(order.user);
+    if (!user) {
+        return res.status(404).json(new ApiResponse(404, null, "User not found"));
+    }
+
+    let updatedOrders = [];
+    for (let userOrder of user.orders) {
+        if (userOrder.orderId.toString() === id) {
+            updatedOrders.push({ ...userOrder._doc, status: newStatus });
+        } else {
+            updatedOrders.push(userOrder);
+        }
+    }
+
+    user.orders = updatedOrders;
+
+    await order.save();
+    await user.save();
+    
+    res.status(200).json(new ApiResponse(200, newStatus, "Order status updated successfully"));
+});
+
+export {AdminGetAllUsers , adminLogin ,AdminGetUser , AdminDeleteUser , AdminAddProduct ,AdminEditProduct , AdminDeleteProduct , AdminGetOrders , AdminUpdateStatus}

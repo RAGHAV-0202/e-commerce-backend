@@ -91,7 +91,7 @@ const UserRegister = asyncHandler(async(req,res)=>{
         sameSite: 'None'
     }
 
-
+    console.log("new user registered")
     return res.status(200)
         .cookie("accessToken" , accessToken , options)
         .cookie("refreshToken" , refreshToken , options)
