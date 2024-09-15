@@ -117,13 +117,16 @@ const UserSchema = new mongoose.Schema({
 
 
 UserSchema.pre("save", async function (next) {
+    console.log("Original password: ", this.password);
     if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 10);
+    console.log("Hashed password: ", this.password);
     next();
 });
 
 UserSchema.methods.isPasswordCorrect = async function (password) {
+    console.log("line 128 from model " + password , this.password)
     return await bcrypt.compare(password, this.password);
 };
 
@@ -177,10 +180,6 @@ UserSchema.pre("save", async function (next) {
 
         this.cart = await Promise.all(cartUpdates);
         this.totalCartValue = totalCartValue;
-    }
-
-    if (this.isModified("password")) {
-        this.password = await bcrypt.hash(this.password, 10);
     }
 
     next();

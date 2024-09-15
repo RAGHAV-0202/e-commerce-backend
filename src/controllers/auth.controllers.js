@@ -26,19 +26,23 @@ async function generateAccessAndRefreshToken(userId){
 
 const UserLogin = asyncHandler(async(req,res)=>{
     const {login , password} = req.body
+    console.log({login , password})
     if(!login?.trim() || !password?.trim()){
         throw new apiError(400 , "Both Fields are required");
     }
 
     const user = await User.findOne({$or : [{email : login} , {phoneNumber : login}]} , { refreshToken : 0})
+    console.log(user)
 
     if(!user){
+        console.log("no user")
         throw new apiError(400 , "Invalid Login or Password")
     }
 
     const isPassValid = await user.isPasswordCorrect(password)
 
     if(!isPassValid){
+        console.log("password invalid")
         throw new apiError(400 , "Invalid Login or Password")
     }
 
@@ -92,6 +96,7 @@ const UserRegister = asyncHandler(async(req,res)=>{
     }
 
     console.log("new user registered")
+    console.log(user)
     return res.status(200)
         .cookie("accessToken" , accessToken , options)
         .cookie("refreshToken" , refreshToken , options)
