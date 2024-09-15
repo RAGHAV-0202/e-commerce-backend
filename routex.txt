@@ -1,13 +1,3 @@
-0. Admin Routes
-    POST /api/admin/login: Login (Admin).                       //
-    GET /api/admin/get-all-users: Get all users (Admin).        //
-    GET /api/admin/get-user/:id: Get user by ID (Admin).        //
-    POST /api/admin/delete-user/:id: Delete user by ID (Admin). //
-    POST /api/admin/add-product: Add a new product (Admin).     //
-    POST /api/admin/edit-product/:id: Edit product by ID        //
-    POST /api/admin/delete-product/:id: Delete product          //
-    GET /api/admin/get-orders: Get all orders (Admin).          //
-    POST /api/admin/edit-status/:id: Update order status        //
 
 1. Authentication Routes
     POST /api/auth/register: Register a new user.               //
@@ -59,10 +49,9 @@
     GET /api/payment/status: Get payment status for an order.
 
 7. Review Routes
-    GET /api/reviews/:productId: Get all reviews for a product.
-    POST /api/reviews/:productId: Add a review for a product.
-    PUT /api/reviews/:productId/:reviewId: Update a review.
-    DELETE /api/reviews/:productId/:reviewId: Delete a review.
+    GET /api/reviews/:productId: Get all reviews for a product.  //
+    POST /api/reviews/:productId: Add a review for a product.    //
+    DELETE /api/reviews/:productId/:reviewId: Delete a review.   //
 
 8. Wishlist Routes
     GET /api/wishlist: Get the user's wishlist.
@@ -74,10 +63,15 @@
     PUT /api/address/:id: Update an address.                    
 
 10. Admin Routes
-    GET /api/admin/dashboard: Get statistics for the admin dashboard.
-    GET /api/admin/orders: Get all orders (Admin).
-    GET /api/admin/products: Get all products (Admin).
-    GET /api/admin/users: Get all users (Admin).
+    POST /api/admin/login: Login (Admin).                       //
+    GET /api/admin/get-all-users: Get all users (Admin).        //
+    GET /api/admin/get-user/:id: Get user by ID (Admin).        //
+    POST /api/admin/delete-user/:id: Delete user by ID (Admin). //
+    POST /api/admin/add-product: Add a new product (Admin).     //
+    POST /api/admin/edit-product/:id: Edit product by ID        //
+    POST /api/admin/delete-product/:id: Delete product          //
+    GET /api/admin/get-orders: Get all orders (Admin).          //
+    POST /api/admin/edit-status/:id: Update order status        //
 
 11. Coupon/Discount Routes
     GET /api/coupons: Get all available coupons.

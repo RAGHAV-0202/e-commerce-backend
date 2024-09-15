@@ -8,46 +8,53 @@ const MenProducts =  asyncHandler(async(req,res)=>{
 
     const page = req.query.page || 1
     //.skip((page - 1) * 25).limit(25).exec()
-    const data = await Products.find({broadCategory : "Men"}).skip((page - 1) * 25).limit(1000).exec()
+    const limit = req.query.limit || 1000 
+    const data = await Products.find({broadCategory : "Men"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 })
 
 const LadiesProducts =  asyncHandler(async(req,res)=>{
     const page = req.query.page || 1
+    const limit = req.query.limit || 1000
     //.skip((page - 1) * 25).limit(25).exec()
-    const data = await Products.find({broadCategory : "Ladies"})
+    const data = await Products.find({broadCategory : "Ladies"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 })
 
 const SportsProducts =  asyncHandler(async(req,res)=>{
+    const limit = req.query.limit || 1000
     const page = req.query.page || 1
-    const data = await Products.find({broadCategory : "Sports"})
+    const data = await Products.find({broadCategory : "Sports"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 })
 
 const newArrivalProducts =  asyncHandler(async(req,res)=>{
+    const limit = req.query.limit || 1000
     const page = req.query.page || 1
-    const data = await Products.find({broadCategory : "newArrival"})
+    const data = await Products.find({broadCategory : "newArrival"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 })
 
 const KidsProducts = asyncHandler(async(req,res)=>{
+    const limit = req.query.limit || 1000
     const page = req.query.page || 1
-    const data = await Products.find({broadCategory : "Kids"})
+    const data = await Products.find({broadCategory : "Kids"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 
 })
 
 const HomeProducts =  asyncHandler(async(req,res)=>{
+    const limit = req.query.limit || 1000
     const page = req.query.page || 1
-    const data = await Products.find({broadCategory : "Home"})
+    const data = await Products.find({broadCategory : "Home"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 
 })
 
 const BabyProducts = asyncHandler(async(req,res)=>{
+    const limit = req.query.limit || 1000
     const page = req.query.page || 1
-    const data = await Products.find({broadCategory : "Baby"})
+    const data = await Products.find({broadCategory : "Baby"}).skip((page - 1) * 25).limit(limit).exec()
     return res.status(200).json(new ApiResponse(200 , data , "Fetched data"))
 
 })
