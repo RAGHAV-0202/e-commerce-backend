@@ -233,8 +233,23 @@ const UserPasswordResetPage = asyncHandler(async(req,res)=>{
 
 })
 
+const isLoggedIn = asyncHandler(async(req,res)=>{
+    const AT = req.cookies.accessToken;
+
+    if(!AT){
+        throw new apiError(400 , "NO TOKEN PRESENT")
+    }
+
+    const decoded = jwt.verify(AT , process.env.ACCESS_TOKEN_SECRET)
+
+    if(!decoded){
+        throw new apiError(400 , "INVALID TOKEN")
+    }
+
+    res.status(200).json(new ApiResponse(200 , decoded , "user is logged in"))
+
+})
 
 
 
-
-export {UserLogin , UserRegister,UserLogout,UserRefreshAccessToken , UserPasswordResetRequest,UserPasswordResetPage}
+export {UserLogin , UserRegister,UserLogout,UserRefreshAccessToken , UserPasswordResetRequest,UserPasswordResetPage , isLoggedIn}
