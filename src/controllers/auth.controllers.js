@@ -107,13 +107,29 @@ const UserRegister = asyncHandler(async(req,res)=>{
 
 })
 
-const UserLogout = asyncHandler(async(req,res)=>{
-    const options = {
-        httpOnly : true , 
-        secure : true
-    }
-    return res.status(200).clearCookie("accessToken").clearCookie("refreshToken").json(new ApiResponse(200 , "user logged out"))
-})
+// const UserLogout = asyncHandler(async(req,res)=>{
+//     const options = {
+//         httpOnly : true , 
+//         secure : true
+//     }
+//     return res.status(200).clearCookie("accessToken").clearCookie("refreshToken").json(new ApiResponse(200 , "user logged out"))
+// })
+
+const UserLogout = asyncHandler(async (req, res) => {
+    const cookieOptions = {
+        httpOnly: true,
+        secure: true, // ensure it's set to true if you're using HTTPS in production
+        sameSite: 'None', // should match how it was set
+        path: '/' // ensure the path matches how the cookie was set
+    };
+
+    // Clear both accessToken and refreshToken cookies
+    res.clearCookie('accessToken', cookieOptions);
+    res.clearCookie('refreshToken', cookieOptions);
+
+    // Return the response after clearing the cookies
+    return res.status(200).json(new ApiResponse(200, "user logged out"));
+});
 
 const UserRefreshAccessToken = asyncHandler(async(req,res)=>{
     const oldRefreshToken = req.cookies.refreshToken
