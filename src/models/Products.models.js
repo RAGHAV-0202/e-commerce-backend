@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 
 const imageSchema = new mongoose.Schema({
-  src: String,
+  src: {
+    type : String ,
+    required : [true , "image is required"]
+  },
   dataAltImage: String,
   alt: String,
   dataAltText: String,
@@ -31,7 +34,7 @@ const productSchema = new mongoose.Schema({
   },
   broadCategory : {
     type : String ,
-    // default : "Baby"
+    // default : "Men",
     required : [true  , "provide broad category"]
   },reviews : [
     {

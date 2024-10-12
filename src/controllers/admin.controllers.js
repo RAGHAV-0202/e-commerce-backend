@@ -157,36 +157,42 @@ const AdminGetOrders = asyncHandler(async(req,res)=>{
 })
 
 const AdminUpdateStatus = asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    const { newStatus } = req.body;
+  const { id } = req.params;
+  const { newStatus } = req.body;
 
-    const order = await Order.findById(id).select("status user");
-    if (!order) {
-        return res.status(404).json(new ApiResponse(404, null, "Order not found"));
+  const order = await Order.findById(id).select("status user");
+  if (!order) {
+    return res.status(404).json(new ApiResponse(404, null, "Order not found"));
+  }
+
+  order.status = newStatus;
+
+  let user = await User.findById(order.user);
+  if (!user) {
+    return res.status(404).json(new ApiResponse(404, null, "User not found"));
+  }
+
+  let updatedOrders = [];
+  for (let userOrder of user.orders) {
+    if (userOrder && userOrder.orderId) {
+      if (userOrder.orderId.toString() === id) {
+        updatedOrders.push({ ...userOrder._doc, status: newStatus });
+      } else {
+        updatedOrders.push(userOrder);
+      }
+    } else {
+      console.warn('Invalid order found in user.orders:', userOrder);
+      // Optionally, you can choose to keep or skip invalid orders
+      // updatedOrders.push(userOrder);
     }
+  }
 
-    order.status = newStatus;
+  user.orders = updatedOrders;
 
-    let user = await User.findById(order.user);
-    if (!user) {
-        return res.status(404).json(new ApiResponse(404, null, "User not found"));
-    }
+  await order.save();
+  await user.save();
 
-    let updatedOrders = [];
-    for (let userOrder of user.orders) {
-        if (userOrder.orderId.toString() === id) {
-            updatedOrders.push({ ...userOrder._doc, status: newStatus });
-        } else {
-            updatedOrders.push(userOrder);
-        }
-    }
-
-    user.orders = updatedOrders;
-
-    await order.save();
-    await user.save();
-    
-    res.status(200).json(new ApiResponse(200, newStatus, "Order status updated successfully"));
+  res.status(200).json(new ApiResponse(200, newStatus, "Order status updated successfully"));
 });
 
 export {AdminGetAllUsers , adminLogin ,AdminGetUser , AdminDeleteUser , AdminAddProduct ,AdminEditProduct , AdminDeleteProduct , AdminGetOrders , AdminUpdateStatus}
